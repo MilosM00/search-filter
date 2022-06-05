@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Name from "./components/Name";
+import jsonData from "./MOCK_DATA.json";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () =>{
+
+    const [search, setSearch] = React.useState("");
+    
+    const change = (e) =>{
+        setSearch(e.target.value);
+    };
+    
+    const data = jsonData.filter(x =>{
+        if(search === ``) return x;
+
+        else if(x.first_name.toLowerCase().includes(search.toLowerCase())) return x;
+        
+    }).map(x => <p key={x.id}>{x.first_name} {x.last_name}</p>);
+    
+    return(
+
+        <div>
+            <Name 
+                data={data}
+                change={change}
+            />
+        </div>
+
+    );
+};
 
 export default App;
